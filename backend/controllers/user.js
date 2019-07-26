@@ -56,7 +56,7 @@ exports.userLogin = (req, res, next) => {
             userId: fetchedUser._id,
             userRole: fetchedUser.role
         });
-        console.log(result);
+        console.log(token);
     })
     .catch(err=> {
         res.status(401).json({
@@ -68,7 +68,7 @@ exports.userLogin = (req, res, next) => {
 exports.getUsers = (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const userQuery = User.find();
+    const userQuery = User.find({role:0});
     let fetchedUsers;
     if (pageSize && currentPage) {
         userQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
@@ -76,7 +76,7 @@ exports.getUsers = (req, res, next) => {
     userQuery
         .then(users => {
         fetchedUsers = users;
-        return User.count();
+        return User.count({role:0});
         })
         .then(count => {
         res.status(200).json({
