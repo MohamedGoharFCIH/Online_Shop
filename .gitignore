@@ -2,13 +2,11 @@
 
 # compiled output
 /dist
-src/environments
-/tmp
 /out-tsc
 
 # dependencies
 /node_modules
-
+/src/environments
 # IDEs and editors
 /.idea
 .project
