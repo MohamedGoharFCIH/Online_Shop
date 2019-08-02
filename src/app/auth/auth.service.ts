@@ -106,7 +106,7 @@ export class AuthService {
           console.log(expirationDate);
           this.saveAuthData(token, expirationDate, this.userId, role);
           if(this.isUser){
-            this.router.navigate(["/"]);
+            this.router.navigate(["/myproducts"]);
           }
           else{ 
             if(this.isAdmin){

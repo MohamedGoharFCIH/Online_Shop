@@ -10,6 +10,7 @@ const productSchema =  new Schema({
     imagePath: { type: String, required: true },
     descripition: { type:String, required:false},
     buyed: { type: Number, default: 0},
+    price : {type: Number, required: true, min:1},
     buyer: {type: mongoose.Schema.Types.ObjectId, ref: "User", required: false}
 });
 

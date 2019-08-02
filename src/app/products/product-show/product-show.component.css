@@ -1,0 +1,39 @@
+:host {
+  display: block;
+  margin-top: 1rem;
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+mat-paginator {
+  margin: 1rem 200px ;
+ 
+}
+mat-expansion-panel{
+  margin: 0px 200px ;
+}
+
+.info-text {
+  text-align: center;
+}
+
+.product-image {
+  width: 100%;
+  
+}
+
+.product-image img {
+  width: 100%;
+  height: 400px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+.welcome{
+  margin: auto 0px 10px 200px;
+  color : rgba(109, 76, 187, 0.808);
+  font-size: 20px;
+}
+.welcome a {
+  text-decoration: none;
+}

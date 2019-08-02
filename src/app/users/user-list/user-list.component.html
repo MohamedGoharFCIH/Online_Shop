@@ -1,11 +1,12 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
+<div  *ngIf="users.length > 0 && !isLoading" class="welcome">Welcome to your Users Page  </div>
 <mat-accordion multi="true" *ngIf="users.length > 0 && !isLoading">
   <mat-expansion-panel *ngFor="let user of users">
     <mat-expansion-panel-header>    
       {{ user.name }}
     </mat-expansion-panel-header>
     <p>{{ user.email }}</p>
-    <mat-action-row *ngIf="userIsAuthenticated && userId === user.creator">
+    <mat-action-row *ngIf="isAdmin">
       <button mat-button color="warn" (click)="onDelete(user.id)">DELETE</button>
     </mat-action-row>
   </mat-expansion-panel>

@@ -1,0 +1,18 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<div  *ngIf="userProducts.length > 0 && !isLoading" class="welcome">Welcome ...!  to your Products Page you are add it  </div>
+<mat-accordion multi="true" *ngIf="userProducts.length > 0 && !isLoading">
+  <mat-expansion-panel *ngFor="let product of userProducts">
+    <mat-expansion-panel-header>    
+      {{ product.name }} 
+    </mat-expansion-panel-header>
+    <div class="product-image">
+      <img [src]="product.imagePath" [alt]="product.name">
+    </div>
+    <p>{{ product.status }}</p>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-paginator [length]="totalUserProducts" [pageSize]="productsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)"
+  *ngIf="userProducts.length > 0"></mat-paginator>
+<p class="info-text mat-body-1" *ngIf="userProducts.length <= 0 && !isLoading">you didnt add products yet ! 
+    add product now <a mat-button  color='primary' routerLink="/create" routerLinkActive="mat-accent">New Product</a>
+</p>

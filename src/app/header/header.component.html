@@ -1,10 +1,16 @@
 <mat-toolbar color="primary">
   <span>
-    <a *ngIf="isUser" routerLink="/">Products</a>
-    <a *ngIf="isAdmin" routerLink="/users">Users</a>
+    <a *ngIf="!userIsAuthenticated" routerLink="">Products</a>
+    <a *ngIf="isUser" routerLink="/myproducts">My Products</a>
+    <a *ngIf="isAdmin" routerLink="/users">Users </a>
+    <a *ngIf="isAdmin" routerLink="/products" style="margin-left: 15px"> Products</a>
+    <a *ngIf="isUser" class="shop"  routerLink="/mypurchases"> My Purchases</a>
   </span>
   <span class="spacer"></span>
   <ul>
+    <li *ngIf="userIsAuthenticated">
+      <a mat-raised-button color='primary'  routerLink="" routerLinkActive="mat-accent">Shop</a>
+    </li>
     <li *ngIf="isUser">
       <a mat-button routerLink="/create" routerLinkActive="mat-accent">New Product</a>
     </li>

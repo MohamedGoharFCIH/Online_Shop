@@ -12,7 +12,7 @@ import { AuthService } from "../../auth/auth.service";
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css']
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, OnDestroy {
 
   users: User[] = [];
   isLoading = false;

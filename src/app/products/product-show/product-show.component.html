@@ -1,0 +1,36 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <div *ngIf="products.length > 0 && !isLoading && isUser" class="welcome">Welcome to Products Page ... Now you can buy any Product  </div>
+  <div *ngIf="products.length > 0 && !isLoading && isAdmin" class="welcome">Welcome to Shop </div>
+  <div *ngIf="!userIsAuthenticated && products.length > 0" class="welcome">   
+    <a  *ngIf="!userIsAuthenticated &&products.length > 0"  routerLink="/auth/login" routerLinkActive="mat-accent">Login </a> 
+    or  
+    <a *ngIf="!userIsAuthenticated"  routerLink="/auth/signup" routerLinkActive="mat-accent">Signup</a>   
+    
+  </div>
+
+<mat-accordion multi="true" *ngIf="products.length > 0 && !isLoading">
+  <mat-expansion-panel *ngFor="let product of products">
+      <mat-expansion-panel-header>    
+        {{ product.name }} <br> price : {{product.price}}$
+      </mat-expansion-panel-header>
+      <p>Categry : {{ product.category }} </p>
+      <div class="product-image">
+        <img [src]="product.imagePath" [alt]="product.name">
+      </div>
+      <p>Status : {{ product.status }} </p>
+      <p>{{ product.descripition }} </p>
+        <mat-action-row *ngIf="isUser && userId !== product.owner_id">
+          <button mat-flat-button color="primary" (click)="onBuy(product.id)" >BUY </button>
+        </mat-action-row>
+        <mat-action-row *ngIf="isUser && userId === product.owner_id">
+          <mat-chip-list>
+            <mat-chip color="primary" selected>Your Product</mat-chip>
+          </mat-chip-list>
+           
+        </mat-action-row>
+    </mat-expansion-panel> 
+</mat-accordion>
+    <mat-paginator [length]="totalProducts" [pageSize]="productsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)"
+    *ngIf="products.length > 0"></mat-paginator>
+<p class="info-text mat-body-1" *ngIf="products.length <= 0 && !isLoading">No products yet!</p>

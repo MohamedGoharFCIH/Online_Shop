@@ -8,7 +8,7 @@ exports.checkAdmin = (req, res, next) => {
         res.status(401).json({ message: "permission denided!" });
     }
     else{
-        req.userData = { email: decodedToken.email, userId: decodedToken.userId, role: decodedToken.role };
+        req.userData = { email: decodedToken.email, userId: decodedToken.id, role: decodedToken.role };
         next();
     }
     
@@ -26,7 +26,7 @@ exports.checkUser = (req, res, next) => {
           res.status(401).json({ message: "permission denided!" });
       }
       else{
-          req.userData = { email: decodedToken.email, userId: decodedToken.userId, role: decodedToken.role };
+          req.userData = { email: decodedToken.email, userId: decodedToken.id, role: decodedToken.role };
           next();
       }
       

@@ -9,7 +9,7 @@ const userRoutes = require('./backend/routes/user');
 
 const app = express();
 app.use(express.static(path.join(__dirname, 'dist')));
-
+app.use("/images", express.static(path.join("backend/images")));
 
 mongoose.connect('mongodb://localhost/shop', { useNewUrlParser: true })
 .then(() => {

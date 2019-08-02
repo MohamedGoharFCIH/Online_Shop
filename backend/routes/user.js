@@ -13,13 +13,13 @@ router.post('/signup', userController.createUser);
 
 router.post('/login', userController.userLogin);
 
-router.get('/users', userController.getUsers);
+router.get('/users', check_role.checkAdmin, userController.getUsers);
 
-router.get('/:id', userController.getUser);
+router.get('/:id', check_role.checkAdmin, userController.getUser);
 
-router.delete('/:id', userController.deleteUser);
+router.delete('/:id', check_role.checkAdmin, userController.deleteUser);
 
-router.put('/:id', userController.editUser);
+router.put('/:id', check_role.checkAdmin, userController.editUser);
 
 
 module.exports = router;

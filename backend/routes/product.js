@@ -9,16 +9,22 @@ const file = require("../middleware/file");
 
 const router = express.Router();
 
-router.post("/add", check_role.checkUser, file.extractFile, productController.createProduct);
+router.post("/add", file.extractFile, check_role.checkUser, productController.createProduct);
 
-router.put("/edit/:id", check_auth.checkAuth, file.extractFile, productController.updateProduct);
+router.put("/edit/:id", file.extractFile, productController.updateProduct);
 
-router.get("", productController.getProducts);
+router.get("/products", check_role.checkUser, productController.getProducts('user'));
 
-router.get("/product/:id", productController.getProduct);
+router.get("", productController.getProducts('guest'));
 
-router.delete("product/:id", check_auth.checkAuth, productController.deleteProduct);
+router.get("/productsmonitor", check_role.checkAdmin, productController.getProducts());
 
-router.post("/buy/:id", check_role.checkUser, productController.buyProduct);
+router.get("/purchases", check_role.checkUser, productController.getProducts('purchases'));
+
+router.get("/:id", check_role.checkUser, productController.getProduct);
+
+router.delete("/:id", check_role.checkAdmin, productController.deleteProduct);
+
+router.put("/buy/:id", check_role.checkUser, productController.buyProduct);
 
 module.exports = router;

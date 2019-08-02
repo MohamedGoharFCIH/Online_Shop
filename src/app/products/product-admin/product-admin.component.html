@@ -1,0 +1,24 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+  <div *ngIf="products.length > 0 && !isLoading && isAdmin" class="welcome">Welcome to Products Page </div>  
+<mat-accordion multi="true" *ngIf="products.length > 0 && !isLoading">
+  <mat-expansion-panel *ngFor="let product of products">
+      <mat-expansion-panel-header>    
+        {{ product.name }} <br> price : {{product.price}}$
+      </mat-expansion-panel-header>
+      <p>Categry : {{ product.category }} </p>
+      <div class="product-image">
+        <img [src]="product.imagePath" [alt]="product.name">
+      </div>
+      <p>Status : {{ product.status }} </p>
+      <p>{{ product.descripition }} </p>
+        <mat-action-row *ngIf="isAdmin">
+          <mat-chip-list >
+            <mat-chip *ngIf="product.buyed !=0 " color="warn" selected>Buyed</mat-chip>
+          </mat-chip-list>
+           
+        </mat-action-row>
+    </mat-expansion-panel> 
+</mat-accordion>
+    <mat-paginator [length]="totalProducts" [pageSize]="productsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)"
+    *ngIf="products.length > 0"></mat-paginator>
+<p class="info-text mat-body-1" *ngIf="products.length <= 0 && !isLoading">No products yet!</p>
