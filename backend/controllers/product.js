@@ -80,17 +80,24 @@ exports.getProducts = function(keyword = ''){
       condition = {owner_id: req.userData.userId};
     }
     else if(keyword == 'guest'){
-      condition = {buyed: 0};
+      condition = {sold: 0};
     }
     else if(keyword == 'purchases'){
       condition = {buyer: req.userData.userId};
+    }
+    else if(keyword == 'shop'){
+      condition = {approved: 1, sold: 0};
     }
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
     const productQuery = Product.find(condition);
     let fetchedProducts;
     if (pageSize && currentPage) {
-        productQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+        productQuery
+        .sort({updatedAt: -1})
+        .skip(pageSize * (currentPage - 1))
+        .limit(pageSize)
+        .populate('owner_id');
     }
     productQuery
         .then(products => {
@@ -160,12 +167,12 @@ exports.deleteProduct = (req, res, next) => {
 
 exports.buyProduct = (req, res, next) => {
  
-  Product.updateOne({ _id: req.params.id, buyed:0 }, {"$set": {"buyer": req.userData.userId, "buyed":1 }} )
+  Product.updateOne({ _id: req.params.id, sold:0 }, {"$set": {"buyer": req.userData.userId, "sold":1 }} )
   .then(result => {
     if (result.n > 0) {
       console.log(result);
       console.log(req.userData.userId)
-      res.status(200).json({ message: "buyed successful!" });
+      res.status(200).json({ message: "sold successful!" });
     } else {
       res.status(401).json({ message: "Not authorized!" });
     }
@@ -175,5 +182,22 @@ exports.buyProduct = (req, res, next) => {
       message: "Couldn't buy it!"
     });
   });
+};
 
+exports.approveProduct = (req, res, next) => {
+ 
+  Product.updateOne({ _id: req.params.id, approved:0 }, {"$set": {"approved":1 }} )
+  .then(result => {
+    if (result.n > 0) {
+      console.log(result);
+      res.status(200).json({ message: "approved successful!" });
+    } else {
+      res.status(401).json({ message: "Not authorized!" });
+    }
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: "Couldn't approve it!"
+    });
+  });
 };

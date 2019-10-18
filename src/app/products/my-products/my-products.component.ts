@@ -13,12 +13,12 @@ import { AuthService } from "../../auth/auth.service";
 })
 export class MyProductsComponent implements OnInit , OnDestroy {
 
-  userProducts: Product[] = [];
+  products: Product[] = [];
   isLoading = false;
-  totalUserProducts = 0;
-  productsPerPage = 2;
+  totalProducts = 0;
+  productsPerPage = 3;
   currentPage = 1;
-  pageSizeOptions = [1, 2, 5, 10];
+  pageSizeOptions = [1, 3, 6, 9];
   userIsAuthenticated = false;
   isAdmin = false;
   isUser = false;
@@ -64,8 +64,8 @@ export class MyProductsComponent implements OnInit , OnDestroy {
     this.userProductsSub = this.productsService.getProductUpdateListener()
     .subscribe((productData: { products: Product[]; productCount: number }) => {
       this.isLoading = false;
-      this.totalUserProducts = productData.productCount;
-      this.userProducts = productData.products;
+      this.totalProducts = productData.productCount;
+      this.products = productData.products;
     });  
   }
 

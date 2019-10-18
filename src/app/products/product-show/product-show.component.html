@@ -1,36 +1,47 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 
-  <div *ngIf="products.length > 0 && !isLoading && isUser" class="welcome">Welcome to Products Page ... Now you can buy any Product  </div>
+  <div *ngIf="products.length > 0 && !isLoading && isUser" class="welcome text-secondary">Welcome to Products Page ... Now you can buy any Product  </div>
   <div *ngIf="products.length > 0 && !isLoading && isAdmin" class="welcome">Welcome to Shop </div>
-  <div *ngIf="!userIsAuthenticated && products.length > 0" class="welcome">   
-    <a  *ngIf="!userIsAuthenticated &&products.length > 0"  routerLink="/auth/login" routerLinkActive="mat-accent">Login </a> 
+  <div *ngIf="!userIsAuthenticated" class="welcome">   
+    <a class="text-secondary" *ngIf="!userIsAuthenticated"  routerLink="/auth/login" routerLinkActive="mat-accent">Login </a> 
     or  
-    <a *ngIf="!userIsAuthenticated"  routerLink="/auth/signup" routerLinkActive="mat-accent">Signup</a>   
+    <a class="text-secondary" *ngIf="!userIsAuthenticated"  routerLink="/auth/signup" routerLinkActive="mat-accent">Signup</a>   
+    To Buy and Sell Products
+  </div>
+
+<mat-paginator  [length]="totalProducts" [pageSize]="productsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)"
+    *ngIf="products.length > 0">
+</mat-paginator>
+
+<div class="card-columns"  *ngIf="products.length > 0 && !isLoading">
+  <div *ngFor="let product of products" class="card">
+      <img style="height:300px;" class="card-img-top" [src]="product.imagePath" [alt]="product.name">
+      
+    <div class="card-body text-secondary">
+      
+      <h5 class="card-title text-dark">{{product.name}}</h5>
+      <hr>
+      <p class="card-text badge badge-success"> {{product.price}} $</p>
+      <p class="text-secondary badge badge-warning"> {{product.category}} category</p>
+      <p class="text-secondary badge badge-info text-light"> {{ product.status }} </p>
+      <mat-expansion-panel style="margin:10px 0px;" *ngIf="product.descripition !='null'" >
+          <mat-expansion-panel-header>    
+            Read More 
+          </mat-expansion-panel-header>
+          <p class="text-secondary" style="font-family: cursive;">{{product.descripition}}</p>
+        </mat-expansion-panel>
+
+      <div *ngIf="isUser && userId !== product.owner_id._id">
+      <button class="btn btn-success" style="margin: 10px 0px;" (click)="onBuy(product.id)" >Buy {{product.price}} $</button>
+       </div>
+       <br>
+      <span  *ngIf="isUser && userId === product.owner_id._id" class="badge badge-primary">My Product</span>
+           
+      </div>
+    </div>
     
   </div>
 
-<mat-accordion multi="true" *ngIf="products.length > 0 && !isLoading">
-  <mat-expansion-panel *ngFor="let product of products">
-      <mat-expansion-panel-header>    
-        {{ product.name }} <br> price : {{product.price}}$
-      </mat-expansion-panel-header>
-      <p>Categry : {{ product.category }} </p>
-      <div class="product-image">
-        <img [src]="product.imagePath" [alt]="product.name">
-      </div>
-      <p>Status : {{ product.status }} </p>
-      <p>{{ product.descripition }} </p>
-        <mat-action-row *ngIf="isUser && userId !== product.owner_id">
-          <button mat-flat-button color="primary" (click)="onBuy(product.id)" >BUY </button>
-        </mat-action-row>
-        <mat-action-row *ngIf="isUser && userId === product.owner_id">
-          <mat-chip-list>
-            <mat-chip color="primary" selected>Your Product</mat-chip>
-          </mat-chip-list>
-           
-        </mat-action-row>
-    </mat-expansion-panel> 
-</mat-accordion>
-    <mat-paginator [length]="totalProducts" [pageSize]="productsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)"
-    *ngIf="products.length > 0"></mat-paginator>
-<p class="info-text mat-body-1" *ngIf="products.length <= 0 && !isLoading">No products yet!</p>
+<p class="text-secondary welcome"  *ngIf="products.length <= 0 && !isLoading">No products yet!</p>
+
+

@@ -1,40 +1,39 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+@import '~font-awesome/css/font-awesome.css';
 :host {
     display: block;
     margin-top: 1rem;
   }
   
   mat-spinner {
-    margin: auto;
+    margin: 0 ;
   }
   
   mat-paginator {
     
-    margin: 1rem  ;
+    margin: 0 400px  ;
    
   }
 
-  mat-expansion-panel{
-    margin:auto 5rem  ;
-  }
-
-  
-  .info-text {
-    text-align: center;
-  }
-  
-  .product-image {
-    width: 100%;
-    
-  }
-  
-  .product-image img {
-    width: 100%;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-  }
   .welcome{
     text-align: center;
     color : rgba(109, 76, 187, 0.808);
     font-size: 20px;;
   }
+
+  .card-columns{
+    font-size: 19px ;
+  }
+  .badge{
+    padding: 10px;
+    margin: 5px;
+    font-family: cursive;
+  }
+
+.info-text{
+  font-size: 18px;
+  font-family: cursive;
+  text-align: center;
+}
 
  

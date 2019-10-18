@@ -1,3 +1,5 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+@import '~font-awesome/css/font-awesome.css';
 :host {
     display: block;
     margin-top: 1rem;
@@ -8,32 +10,22 @@
   }
   
   mat-paginator {
-    margin: 1rem ;
+    margin: 0 400px ;
   }
 
-  mat-expansion-panel{
-    margin: auto 5rem;
-  }
 
   .info-text {
     text-align: center;
   }
-  
-  .product-image {
-    width: 100%;
-    
-  }
-  
-  .product-image img {
-    width: 100%;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-  }
+
   .welcome{
     text-align: center;
-    color : rgba(109, 76, 187, 0.808);
+    font-family: cursive;
     font-size: 20px;
   }
-  .welcome a {
-    text-decoration: none;
+
+  .badge{
+    padding: 10px;
+    margin: 5px;
+    font-family: sans-serif;
   }
-  

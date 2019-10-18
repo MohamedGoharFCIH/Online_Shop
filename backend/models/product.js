@@ -9,9 +9,12 @@ const productSchema =  new Schema({
     owner_id: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
     imagePath: { type: String, required: true },
     descripition: { type:String, required:false},
-    buyed: { type: Number, default: 0},
+    sold: { type: Number, default: 0},
     price : {type: Number, required: true, min:1},
-    buyer: {type: mongoose.Schema.Types.ObjectId, ref: "User", required: false}
-});
+    buyer: {type: mongoose.Schema.Types.ObjectId, ref: "User", required: false},
+    approved: { type: Number, default: 0}
+},
+{timestamps: true}
+);
 
 module.exports = mongoose.model("Product", productSchema);

@@ -75,15 +75,16 @@ export class ProductAdminComponent implements OnInit {
     this.productsPerPage = pageData.pageSize;
     this.productsService.getProducts(this.productsPerPage, this.currentPage, '/productsmonitor');
   }
-  
-  onBuy(productId: string) {
+
+  onApprove(productId: string) {
     this.isLoading = true;
-    this.productsService.buyProduct(productId).subscribe(() => {
-      this.productsService.getProducts(this.productsPerPage, this.currentPage, '/productsmonitor');
+    return this.productsService.approveProduct(productId).subscribe(() => {
+      this.productsService.getProducts(this.productsPerPage, this.currentPage);
     }, () => {
       this.isLoading = false;
     });
   }
+
 
   ngOnDestroy() {
    

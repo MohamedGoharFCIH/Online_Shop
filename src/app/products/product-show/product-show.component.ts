@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, Inject, OnInit, OnDestroy } from "@angular/core";
 import { PageEvent } from "@angular/material";
 import { Subscription } from "rxjs";
 
@@ -13,13 +13,15 @@ import { AuthService } from "../../auth/auth.service";
   styleUrls: ['./product-show.component.css']
 })
 export class ProductShowComponent implements OnInit, OnDestroy {
+ 
 
   products: Product[] = [];
   isLoading = false;
+  isCollapsed = false;
   totalProducts = 0;
-  productsPerPage = 2;
+  productsPerPage = 3;
   currentPage = 1;
-  pageSizeOptions = [1, 2, 5, 10];
+  pageSizeOptions = [1, 3, 6, 9];
   userIsAuthenticated = false;
   isAdmin = false;
   isUser = false;
@@ -94,4 +96,5 @@ export class ProductShowComponent implements OnInit, OnDestroy {
     this.productsSub.unsubscribe();
   }
 
+  
 }

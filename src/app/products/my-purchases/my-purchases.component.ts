@@ -13,12 +13,12 @@ import { AuthService } from "../../auth/auth.service";
 })
 export class MyPurchasesComponent implements OnInit, OnDestroy {
 
-  purchases: Product[] = [];
+  products: Product[] = [];
   isLoading = false;
-  totalPurchases = 0;
-  purchasesPerPage = 2;
+  totalProducts = 0;
+  productsPerPage = 3;
   currentPage = 1;
-  pageSizeOptions = [1, 2, 5, 10];
+  pageSizeOptions = [1, 3, 6, 9];
   userIsAuthenticated = false;
   isAdmin = false;
   isUser = false;
@@ -60,20 +60,20 @@ export class MyPurchasesComponent implements OnInit, OnDestroy {
      
       });
     
-    this.productsService.getProducts(this.purchasesPerPage, this.currentPage, 'purchases/');
+    this.productsService.getProducts(this.productsPerPage, this.currentPage, 'purchases/');
     this.purchasesSub = this.productsService.getProductUpdateListener()
     .subscribe((purchaseData: { products: Product[]; productCount: number }) => {
       this.isLoading = false;
-      this.totalPurchases = purchaseData.productCount;
-      this.purchases = purchaseData.products;
+      this.totalProducts = purchaseData.productCount;
+      this.products = purchaseData.products;
     });  
   }
 
   onChangedPage(pageData: PageEvent) {
     this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
-    this.purchasesPerPage = pageData.pageSize;
-    this.productsService.getProducts(this.purchasesPerPage, this.currentPage, 'purchases/');
+    this.productsPerPage = pageData.pageSize;
+    this.productsService.getProducts(this.productsPerPage, this.currentPage, 'purchases/');
   }
 
 

@@ -6,7 +6,10 @@ export interface Product {
   owner_id: string;
   status: string;
   descripition: string;
-  buyed: number;
+  sold: number;
   buyer: string;
   price:number;
+  createdAt: String;
+  updatedAt: String;
+  approved: number;
 }

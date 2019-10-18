@@ -37,9 +37,12 @@ export class ProductsService {
                 owner_id: product.owner_id,
                 status: product.status,
                 descripition: product.descripition,
-                buyed: product.buyed,
+                sold: product.sold,
                 buyer: product.buyer,
-                price:product.price
+                price:product.price,
+                createdAt: product.createdAt.toString(),
+                updatedAt: product.updatedAt.toString(),
+                approved: product.approved
               };
             }),
             maxProducts: productData.maxProducts
@@ -88,7 +91,7 @@ export class ProductsService {
         productData
       )
       .subscribe(responseData => {
-        this.router.navigate(["/"]);
+        this.router.navigate(["myproducts"]);
       });
   }
 
@@ -101,7 +104,21 @@ export class ProductsService {
     this.getProduct(productId).subscribe(product => {
       buyedPost = product;
     });
-    return this.http.put(BACKEND_URL+'buy/'+ productId, buyedPost);
+     return this.http.put(BACKEND_URL+'buy/'+ productId, buyedPost).subscribe(responseData => {
+      this.router.navigate(["mypurchases"]);
+    });
   }
+
+  approveProduct(productId: string){
+    let approvedProduct;
+    this.getProduct(productId).subscribe(product => {
+      approvedProduct= product;
+    });
+     return this.http.put(BACKEND_URL+'approve/'+ productId, approvedProduct).subscribe(responseData => {
+      this.router.navigate(["/"]);
+    });;
+    
+  }
+
 }
   

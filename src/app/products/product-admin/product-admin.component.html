@@ -1,24 +1,49 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <div *ngIf="products.length > 0 && !isLoading && isAdmin" class="welcome">Welcome to Products Page </div>  
-<mat-accordion multi="true" *ngIf="products.length > 0 && !isLoading">
-  <mat-expansion-panel *ngFor="let product of products">
-      <mat-expansion-panel-header>    
-        {{ product.name }} <br> price : {{product.price}}$
-      </mat-expansion-panel-header>
-      <p>Categry : {{ product.category }} </p>
-      <div class="product-image">
-        <img [src]="product.imagePath" [alt]="product.name">
+<div *ngIf="products.length > 0 && !isLoading && isUser" class="welcome text-secondary">
+  Welcome to Products Page ... Now you can buy any Product  
+</div>  
+
+
+<mat-paginator  [length]="totalProducts" [pageSize]="productsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)"
+    *ngIf="products.length > 0">
+</mat-paginator>
+
+<div class="card-columns"  *ngIf="products.length > 0 && !isLoading">
+  <div *ngFor="let product of products" class="card">
+      <img style="height:300px;" class="card-img-top" [src]="product.imagePath" [alt]="product.name">
+      
+    <div class="card-body text-secondary">
+      
+      <h5 class="card-title text-dark">{{product.name}}
+          <i 
+          *ngIf="product.approved == 1"
+           class="fa fa-check-circle " 
+           style="color: blue;" >
+          </i>
+      </h5>
+      <hr>
+      <p class="card-text badge badge-success"> {{product.price}} $</p>
+      <p class="text-secondary badge badge-warning"> {{product.category}} category</p>
+      <p class="text-secondary badge badge-info text-light"> {{ product.status }} </p>
+      <div *ngIf="product.descripition!='null'">
+        <p class="text-secondary" style="font-family: cursive;">{{product.descripition}}</p>
       </div>
-      <p>Status : {{ product.status }} </p>
-      <p>{{ product.descripition }} </p>
-        <mat-action-row *ngIf="isAdmin">
-          <mat-chip-list >
-            <mat-chip *ngIf="product.buyed !=0 " color="warn" selected>Buyed</mat-chip>
-          </mat-chip-list>
-           
-        </mat-action-row>
-    </mat-expansion-panel> 
-</mat-accordion>
-    <mat-paginator [length]="totalProducts" [pageSize]="productsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)"
-    *ngIf="products.length > 0"></mat-paginator>
-<p class="info-text mat-body-1" *ngIf="products.length <= 0 && !isLoading">No products yet!</p>
+      <span  
+       *ngIf="product.sold !=0"
+       class="badge badge-success">
+        Sold By {{product.owner_id.name}} | email : {{product.owner_id.email}}
+      </span> 
+      <br>
+      <span class="text-primary"> at {{product.updatedAt}}</span> 
+      <div *ngIf="isAdmin && product.approved == 0">
+          <button class="btn btn-primary"  (click)="onApprove(product.id)" >Approve </button>
+           </div>
+      </div>
+      <div class="card-footer"> 
+        <p class="text-dark">Added By {{product.owner_id.name}} | email : {{product.owner_id.email}} </p> 
+           <span class="text-primary"> at {{product.createdAt}} </span>
+      </div>
+    </div>
+    </div>
+
+<p class="text-secondary welcome"  *ngIf="products.length <= 0 && !isLoading">No products yet!</p>

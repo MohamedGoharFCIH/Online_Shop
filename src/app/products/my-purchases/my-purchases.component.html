@@ -1,18 +1,39 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<div  *ngIf="purchases.length > 0 && !isLoading" class="welcome">Welcome to your purchases Page  </div>
-<mat-accordion multi="true" *ngIf="purchases.length > 0 && !isLoading">
-  <mat-expansion-panel *ngFor="let purchase of purchases">
-    <mat-expansion-panel-header>    
-      {{ purchase.name }} 
-    </mat-expansion-panel-header>
-    <div class="purchase-image">
-      <img [src]="purchase.imagePath" [alt]="purchase.name">
+<div style="margin: 0x;" *ngIf="products.length > 0 && !isLoading" class= "text-secondary info-text">Welcome to your purchases Page  </div>
+<p 
+  *ngIf="totalProducts > 0 && !isLoading && totalProducts == 1 "
+   class="text-secondary info-text">
+   You Bought One Product
+</p>
+
+<p
+  *ngIf="totalProducts > 0 && !isLoading && totalProducts !=1 " 
+  class="info-text text-secondary">
+  You Bought {{totalProducts}} Products
+</p>
+<mat-paginator  [length]="totalProducts" [pageSize]="productsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)"
+    *ngIf="products.length > 0">
+</mat-paginator>
+
+
+<div class="card-columns"  *ngIf="products.length > 0 && !isLoading" style="margin-bottom:0px ;">
+  <div *ngFor="let product of products" class="card">
+        <img style="height:300px;"  class="card-img-top" [src]="product.imagePath" [alt]="product.name">
+        
+    <div class="card-body text-secondary">
+        
+      <h5 class="card-title text-dark">{{product.name}}</h5>
+      <hr>
+      <p class="card-text badge badge-success"> {{product.price}} $</p>
+      <p class="text-secondary badge badge-warning"> {{product.category}} category</p>
+      <p class="text-secondary badge badge-info text-light"> {{ product.status }} </p>
+      <div *ngIf="product.descripition!='null'">
+          <p class="text-secondary" style="font-family: cursive;">{{product.descripition}}</p>
+      </div>
     </div>
-    <p>{{ purchase.status }}</p>
-  </mat-expansion-panel>
-</mat-accordion>
-<mat-paginator [length]="totalPurchases" [pageSize]="purchasesPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)"
-  *ngIf="purchases.length > 0"></mat-paginator>
-<p class="info-text mat-body-1" *ngIf="purchases.length <= 0 && !isLoading"> there is No Purchases   
+  </div>
+</div>
+
+<p class="info-text mat-body-1 text-secondary" style="text-align: center;font-size: 17px;" *ngIf="products.length <= 0 && !isLoading"> there is No Purchases   
     <a mat-raised-button color="accent" routerLink="" routerLinkActive="mat-accent">Buy a Product Now</a>
 </p>

@@ -21,7 +21,10 @@
       <img [src]="imagePreview" [alt]="form.value.name">
     </div>
     <mat-form-field>
-      <input matInput type="text" formControlName="status" placeholder="Product Status (New or Old)">
+      <select Value formControlName="status" matNativeControl required placeholder="Select Status">
+        <option value="new">New</option>
+        <option value="Used">Used</option>
+      </select>
       <mat-error *ngIf="form.get('status').invalid">Please enter a product status New or Old.</mat-error>
     </mat-form-field>
     <mat-form-field>
